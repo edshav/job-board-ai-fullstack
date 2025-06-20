@@ -2,6 +2,7 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -9,6 +10,10 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
+import { SidebarUserButton } from '@/features/users/components/SidebarUserButton';
+import { SignedIn, SignedOut } from '@/services/clerk/components/SignInStatus';
+import { LogInIcon } from 'lucide-react';
+import Link from 'next/link';
 import { AppSidebarClient } from './_AppSidebarClient';
 
 export default function HomePage() {
@@ -20,14 +25,31 @@ export default function HomePage() {
             <SidebarTrigger />
             <span className="text-xl text-nowrap">WDS Jobs</span>
           </SidebarHeader>
-          <SidebarContent></SidebarContent>
-          <SidebarFooter>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton>Some Action</SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarFooter>
+          <SidebarContent>
+            <SidebarGroup>
+              <SidebarMenu>
+                <SignedOut>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton asChild>
+                      <Link href="/sign-in">
+                        <LogInIcon />
+                        <span>Log In</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                </SignedOut>
+              </SidebarMenu>
+            </SidebarGroup>
+          </SidebarContent>
+          <SignedIn>
+            <SidebarFooter>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarUserButton />
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarFooter>
+          </SignedIn>
         </Sidebar>
         <main className="flex-1">asafasfs</main>
       </AppSidebarClient>
