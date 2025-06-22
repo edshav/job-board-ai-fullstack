@@ -11,16 +11,37 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { SidebarMenuButton, useSidebar } from '@/components/ui/sidebar';
 import { SignOutButton } from '@/services/clerk/components/AuthButtons';
+import { makeInitials } from '@/utils/makeInitials';
 import { useClerk } from '@clerk/nextjs';
-import { ChevronsUpDownIcon, LogOutIcon, SettingsIcon, UserIcon } from 'lucide-react';
+import {
+  ArrowLeftRightIcon,
+  Building2Icon,
+  ChevronsUpDown,
+  CreditCardIcon,
+  LogOutIcon,
+  UserRoundCogIcon,
+} from 'lucide-react';
 import Link from 'next/link';
-import { makeInitials } from '../../../utils/makeInitials';
 
-type User = { email: string; name: string; image_url: string };
+type User = {
+  email: string;
+};
 
-export function SidebarUserButtonClient({ user }: { user: User }) {
+type Organization = {
+  name: string;
+  image_url: string | null;
+};
+
+export function SidebarOrganizationButtonClient({
+  user,
+  organization,
+}: {
+  user: User;
+  organization: Organization;
+}) {
   const { isMobile, setOpenMobile } = useSidebar();
-  const { openUserProfile } = useClerk();
+  const { openOrganizationProfile } = useClerk();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -28,8 +49,8 @@ export function SidebarUserButtonClient({ user }: { user: User }) {
           size="lg"
           className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
         >
-          <UserInfo {...user} />
-          <ChevronsUpDownIcon className="ml-auto group-data-[state=collapsed]:hidden" />
+          <OrganizationInfo user={user} organization={organization} />
+          <ChevronsUpDown className="ml-auto group-data-[state=collapsed]:hidden" />
         </SidebarMenuButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -39,20 +60,31 @@ export function SidebarUserButtonClient({ user }: { user: User }) {
         className="min-w-64 max-w-80"
       >
         <DropdownMenuLabel className="font-normal p-1">
-          <UserInfo {...user} />
+          <OrganizationInfo user={user} organization={organization} />
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={() => {
-            openUserProfile();
+            openOrganizationProfile();
             setOpenMobile(false);
           }}
         >
-          <UserIcon className="mr-1" /> Profile
+          <Building2Icon className="mr-1" /> Manage Organization
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="/user-settings/notifications">
-            <SettingsIcon className="mr-1" /> Settings
+          <Link href="/employer/user-settings">
+            <UserRoundCogIcon className="mr-1" /> User Settings
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/employer/pricing">
+            <CreditCardIcon className="mr-1" /> Change Plan
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href="/organizations/select">
+            <ArrowLeftRightIcon className="mr-1" /> Switch Organizations
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
@@ -66,20 +98,20 @@ export function SidebarUserButtonClient({ user }: { user: User }) {
   );
 }
 
-function UserInfo({ email, name, image_url }: User) {
-  const nameInitials = makeInitials(name);
+function OrganizationInfo({ organization, user }: { user: User; organization: Organization }) {
+  const nameInitials = makeInitials(organization.name);
 
   return (
     <div className="flex items-center gap-2 overflow-hidden">
       <Avatar className="rounded-lg size-8">
-        <AvatarImage src={image_url} alt={name} />
+        <AvatarImage src={organization.image_url ?? undefined} alt={organization.name} />
         <AvatarFallback className="uppercase bg-primary text-primary-foreground">
           {nameInitials}
         </AvatarFallback>
       </Avatar>
       <div className="flex flex-col flex-1 min-w-0 leading-tight group-data-[state=collapsed]:hidden">
-        <span className="truncate text-sm font-semibold">{name}</span>
-        <span className="truncate text-xs">{email}</span>
+        <span className="truncate text-sm font-semibold">{organization.name}</span>
+        <span className="truncate text-xs">{user.email}</span>
       </div>
     </div>
   );
