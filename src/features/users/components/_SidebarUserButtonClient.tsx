@@ -16,7 +16,7 @@ import { ChevronsUpDownIcon, LogOutIcon, SettingsIcon, UserIcon } from 'lucide-r
 import Link from 'next/link';
 import { makeInitials } from '../utils/makeInitials';
 
-type User = { email: string; name: string; imageUrl: string };
+type User = { email: string; name: string; image_url: string };
 
 export function SidebarUserButtonClient({ user }: { user: User }) {
   const { isMobile, setOpenMobile } = useSidebar();
@@ -66,13 +66,13 @@ export function SidebarUserButtonClient({ user }: { user: User }) {
   );
 }
 
-function UserInfo({ email, name, imageUrl }: User) {
+function UserInfo({ email, name, image_url }: User) {
   const nameInitials = makeInitials(name);
 
   return (
     <div className="flex items-center gap-2 overflow-hidden">
       <Avatar className="rounded-lg size-8">
-        <AvatarImage src={imageUrl} alt={name} />
+        <AvatarImage src={image_url} alt={name} />
         <AvatarFallback className="uppercase bg-primary text-primary-foreground">
           {nameInitials}
         </AvatarFallback>

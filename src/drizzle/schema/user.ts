@@ -8,7 +8,7 @@ import { UserResumeTable } from './userResume';
 export const UserTable = pgTable('users', {
   id: varchar().primaryKey(),
   name: varchar().notNull(),
-  image_url: varchar(),
+  image_url: varchar().notNull(),
   email: varchar().notNull().unique(),
   created_at,
   updated_at,
