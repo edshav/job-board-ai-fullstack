@@ -15,6 +15,13 @@
       "when": 1750553812712,
       "tag": "0001_soft_violations",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1750636309656,
+      "tag": "0002_low_mattie_franklin",
+      "breakpoints": true
     }
   ]
 }

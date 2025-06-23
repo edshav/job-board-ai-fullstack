@@ -1,4 +1,4 @@
-import { DeletedObjectJSON, UserJSON } from '@clerk/nextjs/server';
+import { DeletedObjectJSON, OrganizationJSON, UserJSON } from '@clerk/nextjs/server';
 import { EventSchemas, Inngest } from 'inngest';
 
 type WebhookData<T> = {
@@ -13,6 +13,9 @@ type Events = {
   'clerk/user.created': WebhookData<UserJSON>;
   'clerk/user.updated': WebhookData<UserJSON>;
   'clerk/user.deleted': WebhookData<DeletedObjectJSON>;
+  'clerk/organization.created': WebhookData<OrganizationJSON>;
+  'clerk/organization.updated': WebhookData<OrganizationJSON>;
+  'clerk/organization.deleted': WebhookData<DeletedObjectJSON>;
 };
 
 export const inngest = new Inngest({
