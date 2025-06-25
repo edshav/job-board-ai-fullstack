@@ -75,8 +75,11 @@ export function JobListingForm({
     },
   });
 
+  const [action, submitButtonLabel] = jobListing
+    ? [updateJobListing.bind(null, jobListing.id), 'Edit job listing']
+    : [createJobListing, 'Create job listing'];
+
   async function onSubmit(data: z.infer<typeof jobListingSchema>) {
-    const action = jobListing ? updateJobListing.bind(null, jobListing.id) : createJobListing;
     const res = await action(data);
 
     if (res.error) {
@@ -285,7 +288,7 @@ export function JobListingForm({
           )}
         />
         <Button disabled={form.formState.isSubmitting} type="submit" className="w-full">
-          <LoadingSwap isLoading={form.formState.isSubmitting}>Create Job Listing</LoadingSwap>
+          <LoadingSwap isLoading={form.formState.isSubmitting}>{submitButtonLabel}</LoadingSwap>
         </Button>
       </form>
     </Form>
