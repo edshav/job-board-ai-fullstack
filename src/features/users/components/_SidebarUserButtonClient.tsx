@@ -14,7 +14,7 @@ import { SignOutButton } from '@/services/clerk/components/AuthButtons';
 import { useClerk } from '@clerk/nextjs';
 import { ChevronsUpDownIcon, LogOutIcon, SettingsIcon, UserIcon } from 'lucide-react';
 import Link from 'next/link';
-import { makeInitials } from '../../../utils/makeInitials';
+import { makeInitials } from '../../../lib/makeInitials';
 
 type User = { email: string; name: string; image_url: string };
 

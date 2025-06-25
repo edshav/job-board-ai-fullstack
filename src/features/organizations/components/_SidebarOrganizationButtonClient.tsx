@@ -10,8 +10,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { SidebarMenuButton, useSidebar } from '@/components/ui/sidebar';
+import { makeInitials } from '@/lib/makeInitials';
 import { SignOutButton } from '@/services/clerk/components/AuthButtons';
-import { makeInitials } from '@/utils/makeInitials';
 import { useClerk } from '@clerk/nextjs';
 import {
   ArrowLeftRightIcon,
